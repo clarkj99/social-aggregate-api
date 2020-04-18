@@ -1,9 +1,12 @@
 # Import Sample data from CSVs
 require "csv"
+User.destroy_all
+Post.destroy_all
+Comment.destroy_all
+Rating.destroy_all
 
 # ------------------------------------
 
-User.destroy_all
 puts "Importing Users data ..."
 csv_text = File.path(Rails.root.join("db/csv", "users.csv"))
 
@@ -21,7 +24,6 @@ puts "Imported #{count} Users"
 
 # ------------------------------------
 
-Post.destroy_all
 puts "Importing Posts data ..."
 csv_text = File.path(Rails.root.join("db/csv", "posts.csv"))
 
@@ -38,7 +40,6 @@ puts "Imported #{count} Posts"
 
 # ------------------------------------
 
-Comment.destroy_all
 puts "Importing Comments data ..."
 csv_text = File.path(Rails.root.join("db/csv", "comments.csv"))
 
@@ -55,7 +56,6 @@ puts "Imported #{count} Comments"
 
 # ------------------------------------
 
-Rating.destroy_all
 puts "Importing Ratings data ..."
 csv_text = File.path(Rails.root.join("db/csv", "ratings.csv"))
 
