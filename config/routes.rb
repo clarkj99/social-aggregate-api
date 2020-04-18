@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :ratings
-  resources :commentsses
+  resources :comments
   resources :posts
   resources :users
   mount Rswag::Ui::Engine => '/api-docs'
