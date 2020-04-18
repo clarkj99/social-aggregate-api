@@ -5,7 +5,7 @@
 
 ## ERD
 
-![FIXD Backend Code Challenge](./public/images/erd.png?raw=true "ERD")
+![FIXD Backend Code Challenge](./public/images/FIXDBackendCodeChallenge.png?raw=true "ERD")
 
 ## Sample Data
 

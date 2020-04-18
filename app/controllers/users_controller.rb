@@ -5,12 +5,12 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @users
+    render json: @users.to_json(only: [:email, :name], methods: :average_rating)
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user.to_json(only: [:email, :name], methods: :average_rating)
   end
 
   # POST /users
@@ -39,13 +39,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.require(:user).permit(:email, :name, :github_username, :registered_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find_by(id: params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def user_params
+    params.require(:user).permit(:email, :name, :github_username, :registered_at)
+  end
 end
