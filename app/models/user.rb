@@ -14,7 +14,7 @@ class User < ApplicationRecord
     if self.ratings.count > 0
       self.ratings.map { |r| r.rating }.sum / self.ratings.count
     else
-      0
+      1
     end
   end
 end
