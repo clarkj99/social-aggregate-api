@@ -3,8 +3,4 @@ class Rating < ApplicationRecord
   belongs_to :user
 
   validates :rating, presence: true, inclusion: 1..5
-
-  def normalized_date
-    rated_at
-  end
 end

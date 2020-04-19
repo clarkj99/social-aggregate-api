@@ -69,3 +69,13 @@ CSV.foreach(csv_text, liberal_parsing: true) do |row|
   end
 end
 puts "Imported #{count} Ratings"
+
+# ------------------------------------
+
+user = User.first
+user.update(github_username: "clarkj99")
+user.save
+
+user = User.second
+user.update(github_username: "learn-co")
+user.save
