@@ -166,7 +166,7 @@ The `data` array from the timelines endpoint can contain objects of six OBJECT_T
 
 - [ ] Implement page and limit for timelines
 - [ ] Implement JWT Authentication
-- [ ] Add Integration testing and documentation across all planned endpoints
+- [ ] Add Integration testing and documentation across all planned endpoints, especially the edits and updates
 - [ ] Clean up routes
 
 ## Endpoints
