@@ -1,5 +1,7 @@
 # FIXD Backend Code Challenge
 
+A web service API which designed to provide data to a hypothetical social media application with mobile and web clients.
+
 - Author: Clark Johnson
 - Ruby on Rails
 
@@ -7,9 +9,123 @@
 
 ![FIXD Backend Code Challenge](./public/images/FIXDBackendCodeChallenge.png?raw=true "ERD")
 
-## Sample Data
+## Getting Started
 
-Data is available to import via `rails db:seed` from four CSVs: users.csv, posts.csv, comments.csv, and ratings.csv
+- `rake db:create` to initalize the Postgres database
+- Postgres database is called "backend_test" and "backend_development"
+- Load sample data : `rake db:seed`, `rake db:test:prepare RAILS_ENV=test`
+
+## API Documentation
+
+- Swagger documentation is configured for http: server, localhost:3000 by default. Access at /api-docs endpoint when server is running.
+
+### GET /post/:id
+
+Sample return data
+
+```
+{
+  "data": {
+    "id": 0,
+    "title": "string",
+    "body": "string",
+    "posted_at": "2020-04-20T06:15:41.659Z",
+    "user": {
+      "name": "string",
+      "average_rating": 0
+    },
+    "comments": [
+      {
+        "id": 0,
+        "message": "string",
+        "commented_at": "2020-04-20T06:15:41.659Z",
+        "user": {
+          "name": "string",
+          "average_rating": 0
+        }
+      }
+    ]
+  }
+}
+```
+
+### POST /posts
+
+Since this API is currently implemented without authentication, the user `id` must be supplied, Once authentication is in place, the `id` will be taken from the token.
+
+Request header: "Content-Type":"application/json"
+
+Request body:
+
+```
+{
+  "title": "string",
+  "body": "string",
+  "posted_at": "2017-09-22T12:13:05.000Z",
+  "user_id": 1
+}
+```
+
+### GET /timelines/:user_id
+
+The `data` array from the timelines endpoint can contain objects of six OBJECT_TYPEs: `comment`, `post`, `surpass_rating`, `PushEvent`, `CreateEvent`, `PullRequestEvent`
+
+```
+{
+  "meta": {
+    "timeline_count": 0
+  },
+    "data": [
+      {
+        "id": 0,
+        "type": OBJECT_TYPE,
+          ... other attributes for this OBJECT_TYPE...
+      }
+    ]
+}
+```
+
+#### comment example
+
+```
+{
+  "id": 24199,
+  "type": "comment",
+  "message": "She's dead... Wrapped in plastic.",
+  "post": {
+    "post_id": 736,
+    "title": "When The Going Gets Tough, The Tough Reinvent",
+    "author": {
+      "name": "Jessica Wild",
+      "avg_rating": 4
+    }
+  },
+"commented_at": "2017-09-07T00:07:46.000Z"
+},
+```
+
+#### post example
+
+```
+{
+  "id": 106,
+  "type": "post",
+  "title": "I don't wanna talk. I wanna shoot.",
+  "comment_count": 2,
+  "posted_at": "2017-11-20T17:54:29.000Z"
+}
+```
+
+#### surpass_rating example
+
+```
+{
+  "id": 3215,
+  "type": "surpass_rating",
+  "rating": 4,
+  "rated_at": "2017-09-29T18:23:51.000Z"
+},
+```
 
 ## Todo
 
@@ -27,14 +143,29 @@ Data is available to import via `rails db:seed` from four CSVs: users.csv, posts
 - [x] Add model relationships
 - [x] Add validation rules
 - [x] Import sample data
+  - Data is available to import via `rails db:seed` from four CSVs: users.csv, posts.csv, comments.csv, and ratings.csv
+  - Before testing, seed data can be loaded to test via `rails db:test:prepare RAILS_ENV=test`
 - [x] Add timeline endpoint
   - `rails g controller Timelines show`
-- [ ] Create integration tests for Swagger
-  - `rails db:seed RAILS_ENV=test`
-- [ ] Authenticate
+- [x] Create integration tests for Swagger
+
+  - Integration tests configured for these endpoints:
+
+    - get /post/{id}
+    - post /posts
+    - get /timelines/{user_id}
+    - get /users/{id}
+
+  - Swagger docs genereated via `rails rswag`
+
+- [ ] Implement page and limit for timelines
+- [ ] Implement JWT Authentication
+- [ ] Add Integration testing and documentation across all planned endpoints
+- [ ] Clean up routes
 
 ## Endpoints
 
+- All routes currently implemented as resources. Routes will be restricted after authentication is implemented and testing nears completion.
 - get /users/:id
 - get /timelines/:userid
 - put /posts

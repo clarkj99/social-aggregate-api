@@ -5,12 +5,16 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @users.to_json(only: [:email, :name], methods: :average_rating)
+    render json: @users.to_json(only: [:id, :email, :name, :registered_at], methods: :average_rating)
   end
 
   # GET /users/1
   def show
-    render json: @user.to_json(only: [:email, :name], methods: :average_rating)
+    if @user
+      render json: @user.to_json(only: [:id, :email, :name, :registered_at], methods: :average_rating)
+    else
+      render status: :not_found
+    end
   end
 
   # POST /users

@@ -5,17 +5,19 @@ RSpec.describe "api/posts", type: :request do
                         body: { type: :string },
                         posted_at: { type: :string },
                         user_id: { type: :number } }
+  user_properties = { type: :object, properties: { name: { type: :string }, average_rating: { type: :number } } }
+  comment_properties = { type: :array, items: { type: :object, properties: { id: { type: :number }, message: { type: :string }, commented_at: { type: :string, format: "date-time" }, user: user_properties } } }
 
   path "/posts/{id}" do
-    get "Retrieve a post" do
+    get "Retrieve a single post" do
       tags "Posts"
       produces "application/json"
       parameter name: :id, in: :path, type: :number
-      #   parameter name: :page, in: :query, type: :integer
+
       response "200", "post found" do
         schema type: :object,
                properties: {
-                 data: { type: :object, properties: { id: { type: :number }, title: { type: :string }, body: { type: :string }, posted_at: { type: :string, format: "date-time" }, user: { type: :object }, comments: { type: :array, items: { type: :object } } } },
+                 data: { type: :object, properties: { id: { type: :number }, title: { type: :string }, body: { type: :string }, posted_at: { type: :string, format: "date-time" }, user: user_properties, comments: comment_properties } },
                },
                required: ["data"]
 
@@ -42,7 +44,7 @@ RSpec.describe "api/posts", type: :request do
                   },
                 }
       response "201", "post created" do
-        let(:peace) { { title: "This is a title", body: "This is a sentence", user_id: User.first.id } }
+        let(:peace) { { title: "This is a title", body: "This is a sentence", user_id: User.first.id, posted_at: Time.new } }
         run_test!
       end
       response "422", "invalid request" do

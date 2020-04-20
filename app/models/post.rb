@@ -4,4 +4,5 @@ class Post < ApplicationRecord
 
   validates :title, presence: :true, length: { in: 3..50 }
   validates :body, presence: :true, length: { in: 3..1000 }
+  validates :posted_at, presence: :true
 end

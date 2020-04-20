@@ -7,10 +7,10 @@ RSpec.describe "api/timelines", type: :request do
   }
 
   path "/timelines/{user_id}" do
+    parameter name: :user_id, in: :path, type: :string
     get "Retrieve a user's timeline" do
       tags "Timelines"
       produces "application/json"
-      parameter name: :user_id, in: :path, type: :string
       #   parameter name: :page, in: :query, type: :integer
       response "200", "timeline found" do
         schema type: :object,
@@ -21,7 +21,7 @@ RSpec.describe "api/timelines", type: :request do
                },
                required: ["meta", "data"]
         let(:user_id) { User.first.id }
-
+        # let(:page) { 1 }
         run_test!
       end
     end

@@ -8,7 +8,7 @@ info:
 paths:
   "/posts/{id}":
     get:
-      summary: Retrieve a post
+      summary: Retrieve a single post
       tags:
       - Posts
       parameters:
@@ -39,10 +39,30 @@ paths:
                         format: date-time
                       user:
                         type: object
+                        properties:
+                          name:
+                            type: string
+                          average_rating:
+                            type: number
                       comments:
                         type: array
                         items:
                           type: object
+                          properties:
+                            id:
+                              type: number
+                            message:
+                              type: string
+                            commented_at:
+                              type: string
+                              format: date-time
+                            user:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                average_rating:
+                                  type: number
                 required:
                 - data
   "/posts":
@@ -82,16 +102,16 @@ paths:
                 posted_at: '2017-09-22T12:13:05.000Z'
                 user_id: 1
   "/timelines/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
     get:
       summary: Retrieve a user's timeline
       tags:
       - Timelines
-      parameters:
-      - name: user_id
-        in: path
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: timeline found
@@ -112,6 +132,44 @@ paths:
                 required:
                 - meta
                 - data
+  "/users/{id}":
+    get:
+      summary: Retrieve a single user
+      tags:
+      - User
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  github_username:
+                    type: string
+                  registered_at:
+                    type: string
+                    format: date-time
+                required:
+                - id
+                - email
+                - name
+                - average_rating
+        '404':
+          description: user not found
+          content: {}
 servers:
 - url: http://{defaultHost}
   variables:
