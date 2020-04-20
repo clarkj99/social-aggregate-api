@@ -27,9 +27,10 @@ Data is available to import via `rails db:seed` from four CSVs: users.csv, posts
 - [x] Add model relationships
 - [x] Add validation rules
 - [x] Import sample data
-- [ ] Add timeline endpoint
+- [x] Add timeline endpoint
   - `rails g controller Timelines show`
 - [ ] Create integration tests for Swagger
+  - `rails db:seed RAILS_ENV=test`
 - [ ] Authenticate
 
 ## Endpoints

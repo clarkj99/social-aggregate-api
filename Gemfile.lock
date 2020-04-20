@@ -209,9 +209,9 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.2)
   rest-client (~> 2.1)
-  rspec-rails
-  rswag
-  rswag-specs
+  rspec-rails (~> 4.0.0)
+  rswag (~> 2.3.1)
+  rswag-specs (~> 2.3.1)
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

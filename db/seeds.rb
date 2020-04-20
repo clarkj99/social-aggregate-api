@@ -30,7 +30,8 @@ csv_text = File.path(Rails.root.join("db/csv", "posts.csv"))
 count = 1
 CSV.foreach(csv_text, liberal_parsing: true) do |row|
   # Skip the header row
-  Post.create({ title: row[1], body: row[2], user_id: row[3], posted_at: row[4] }) if count > 1
+  # Use postid from data instead of generated one
+  Post.create({ title: row[1], body: row[2], user_id: row[3], posted_at: row[4] }) { |post| post.id = row[0] } if count > 1
   count += 1
   if (count % 100) == 0
     puts count

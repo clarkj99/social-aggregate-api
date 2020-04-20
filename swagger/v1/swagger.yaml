@@ -1,0 +1,119 @@
+---
+openapi: 3.0.1
+info:
+  title: FIXD Backend Challenge API V1
+  version: v1
+  description: A web service API which designed to provide data to a hypothetical
+    social media application with mobile and web clients.
+paths:
+  "/posts/{id}":
+    get:
+      summary: Retrieve a post
+      tags:
+      - Posts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: post found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      title:
+                        type: string
+                      body:
+                        type: string
+                      posted_at:
+                        type: string
+                        format: date-time
+                      user:
+                        type: object
+                      comments:
+                        type: array
+                        items:
+                          type: object
+                required:
+                - data
+  "/posts":
+    post:
+      summary: Create a Post
+      tags:
+      - Posts
+      parameters: []
+      responses:
+        '201':
+          description: post created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                posted_at:
+                  type: string
+                user_id:
+                  type: number
+              required:
+              - title
+              - body
+              - user_id
+              example:
+                title: This is a title
+                body: This is a sentence
+                posted_at: '2017-09-22T12:13:05.000Z'
+                user_id: 1
+  "/timelines/{user_id}":
+    get:
+      summary: Retrieve a user's timeline
+      tags:
+      - Timelines
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: timeline found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      timeline_count:
+                        type: number
+                  data:
+                    type: array
+                    items:
+                      type: object
+                required:
+                - meta
+                - data
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
