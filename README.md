@@ -11,9 +11,15 @@ A web service API which designed to provide data to a hypothetical social media 
 
 ## Getting Started
 
-- `rake db:create` to initalize the Postgres database
-- Postgres database is called "backend_test" and "backend_development"
-- Load sample data : `rake db:seed`, `rake db:test:prepare RAILS_ENV=test`
+This project requires Postgres.
+
+- `bundle install`
+- `rails db:create` to initalize the Postgres databases "backend_test" and "backend_development"
+- `rails db:migrate`,
+- `rails db:seed`,
+- To run integration specs:
+  - `rails db:test:prepare RAILS_ENV=test`
+  - `rspec -f d spec/requests/api/posts_spec.rb` -`rspec spec/requests/api/timelines_spec.rb -f d`
 
 ## API Documentation
 
