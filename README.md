@@ -171,7 +171,7 @@ The `data` array from the timelines endpoint can contain objects of six OBJECT_T
 
 ## Endpoints
 
-- All routes currently implemented as resources. Routes will be restricted after authentication is implemented and testing nears completion.
+- All routes, except timelines/:user_id, currently implemented as resources. Routes will be restricted after authentication is implemented and testing nears completion. For timelines, only `#show` is implemented.
 - get /users/:id
 - get /timelines/:userid
 - put /posts
