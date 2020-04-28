@@ -178,3 +178,9 @@ The `data` array from the timelines endpoint can contain objects of six OBJECT_T
 - put /comments
 - delete /comments/:id
 - put /ratings
+
+## Serializer
+
+### fast-jsonapi
+
+- `gem "fast_jsonapi", "~> 1.5"`

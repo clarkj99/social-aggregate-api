@@ -41,3 +41,5 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "rswag", "~> 2.3.1"
 
 gem "rest-client", "~> 2.1"
+
+gem "fast_jsonapi", "~> 1.5"

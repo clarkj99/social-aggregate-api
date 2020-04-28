@@ -11,7 +11,8 @@ class UsersController < ApplicationController
   # GET /users/1
   def show
     if @user
-      render json: @user.to_json(only: [:id, :email, :name, :registered_at], methods: :average_rating)
+      # render json: @user.to_json(only: [:id, :email, :name, :registered_at], methods: :average_rating)
+      render json: UserSerializer.new(@user).serializable_hash
     else
       render status: :not_found
     end
