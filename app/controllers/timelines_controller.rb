@@ -32,16 +32,7 @@ class TimelinesController < ApplicationController
          "rated_at" => rating.rated_at }
       end
 
-      # Combine arrays and sort by date descending
-      timeline = (posts + events + comments + ratings).sort do |a, b|
-        sort_date = { "comment" => "commented_at", "post" => "posted_at", "surpass_rating" => "rated_at", "PushEvent" => "created_at", "CreateEvent" => "created_at", "PullRequestEvent" => "created_at" }
-
-        first_date = a[sort_date[a["type"]]]
-        second_date = b[sort_date[b["type"]]]
-
-        second_date <=> first_date
-      end
-
+      timeline = merge_arrays([posts, events, comments, ratings])
       render json: { meta: { total_events: timeline.count }, data: timeline }
     else
       render json: { meta: { total_events: timeline.count }, data: [] }
@@ -82,5 +73,40 @@ class TimelinesController < ApplicationController
           (event["type"] == "PullRequestEvent" && event["payload"]["action"] == "closed" && event["payload"]["pull_request"]["merged"])
       end
     end
+  end
+
+  # perform limited k-way merge with presorted arrays
+  def merge_arrays(arrs)
+    merged_array = []
+
+    # should limit based on parameter
+    50.times do
+      populated_arrays = []
+      for i in 0..arrs.count - 1
+        # only deal with arrays that still contain objects
+        if arrs[i].count > 0
+          populated_arrays.push(arrs[i])
+        end
+      end
+      merged_array.push(find_winner(populated_arrays))
+    end
+
+    merged_array
+  end
+
+  def find_winner(arrs)
+    n = arrs.count
+
+    # find the array with the first object having the latest date, then shift that object and return it
+    max_arr = arrs.max do |a, b|
+      sort_date = { "comment" => "commented_at", "post" => "posted_at", "surpass_rating" => "rated_at", "PushEvent" => "created_at", "CreateEvent" => "created_at", "PullRequestEvent" => "created_at" }
+      first_date = a[0][sort_date[a[0]["type"]]]
+      second_date = b[0][sort_date[b[0]["type"]]]
+
+      first_date <=> second_date
+    end
+    winner = max_arr[0]
+    max_arr.shift
+    winner
   end
 end

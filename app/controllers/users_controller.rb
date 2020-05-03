@@ -4,15 +4,14 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
-    # render json: @users.to_json(only: [:id, :email, :name, :registered_at], methods: :average_rating)
-    render json: UserSerializer.new(@users).serializable_hash
+    options = {}
+    options[:meta] = { total_users: @users.count }
+    render json: UserSerializer.new(@users, options).serializable_hash
   end
 
   # GET /users/1
   def show
     if @user
-      # render json: @user.to_json(only: [:id, :email, :name, :registered_at], methods: :average_rating)
       render json: UserSerializer.new(@user).serializable_hash
     else
       render status: :not_found
