@@ -1,13 +1,13 @@
-# FIXD Backend Code Challenge
+# SOCIAL AGGREGATE API
 
-A web service API which designed to provide data to a hypothetical social media application with mobile and web clients.
+A web service API which designed to provide data to a social media application with mobile and web clients.
 
 - Author: Clark Johnson
 - Ruby on Rails
 
 ## ERD
 
-![FIXD Backend Code Challenge](./public/images/FIXDBackendCodeChallenge.png?raw=true "ERD")
+![SOCIAL AGGREGATE API](./public/images/FIXDBackendCodeChallenge.png?raw=true "ERD")
 
 ## Getting Started
 
